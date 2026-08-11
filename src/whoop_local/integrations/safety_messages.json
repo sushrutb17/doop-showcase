@@ -1,0 +1,8 @@
+{
+  "offline": "Training data is offline. I can’t verify current recovery, plans, or completion. Try again after Doop reconnects.",
+  "safety": {
+    "pain_or_injury": "Stop the painful exercise now. Sharp or worsening knee pain is not something to push through. Do not continue today’s squats. Seek prompt medical care for severe pain, deformity, numbness, loss of strength or sensation, inability to bear weight, or a locked or unstable joint; otherwise arrange an assessment if the pain persists or keeps worsening.",
+    "illness_or_severe_fatigue": "Do not train through illness or unusual severe fatigue today. Rest and resume only after symptoms have clearly improved. Seek medical advice for concerning, worsening, or persistent symptoms.",
+    "dizziness_or_chest_pain": "Stop training now and seek urgent medical help for chest pain or dizziness during exercise. If chest pain is happening now, call emergency services."
+  }
+}

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Doop is a privacy-safe method-and-evidence project about reverse engineering a WHOOP 4.0 and building a bounded training agent."
+    />
+    <meta name="theme-color" content="#171716" />
+    <meta property="og:title" content="Doop | Reverse engineering and agent safety" />
+    <meta
+      property="og:description"
+      content="Retained packets, hardware validation, confidence gates, and a minimum-disclosure training agent."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://doop-showcase.vercel.app" />
+    <meta
+      property="og:image"
+      content="https://doop-showcase.vercel.app/assets/hero-biometric-workbench.jpg"
+    />
+    <link rel="canonical" href="https://doop-showcase.vercel.app" />
+    <title>Doop | Method and evidence</title>
+    <link rel="icon" href="/assets/hero-biometric-workbench.jpg" />
+    <link rel="preload" href="/assets/hero-biometric-workbench.jpg" as="image" />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script src="/assets/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="#main" aria-label="Doop home">DOOP</a>
+      <nav aria-label="Primary navigation">
+        <a href="#evidence">Evidence</a>
+        <a href="https://github.com/sushrutb17/doop-showcase">GitHub</a>
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle>Theme: system</button>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Local-first training agent</p>
+          <h1 id="hero-title">Reverse engineering a wearable into a safer training agent.</h1>
+          <p class="hero-summary">
+            A method-and-evidence project built from retained packets, real hardware failures,
+            and explicit decision gates.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="button button-primary"
+              href="https://github.com/sushrutb17/doop-showcase/blob/main/CASE_STUDY.md"
+              >Case study</a
+            >
+            <a class="button button-secondary" href="https://github.com/sushrutb17/doop-showcase"
+              >GitHub</a
+            >
+          </div>
+        </div>
+
+        <figure class="hero-visual">
+          <img
+            src="/assets/hero-biometric-workbench.jpg"
+            width="1536"
+            height="1024"
+            alt="An unbranded biometric wrist strap on a graphite engineering workbench"
+            fetchpriority="high"
+          />
+        </figure>
+      </section>
+
+      <section class="evidence-strip" aria-label="Engineering evidence highlights">
+        <article>
+          <strong>Raw-first</strong>
+          <span>every interpretation can be re-derived</span>
+        </article>
+        <article>
+          <strong>CRC-checked</strong>
+          <span>framing and payload integrity verified</span>
+        </article>
+        <article>
+          <strong>Replay-safe</strong>
+          <span>commit-before-ACK history recovery</span>
+        </article>
+        <article>
+          <strong>Data-free CI</strong>
+          <span>synthetic tests require no wearable</span>
+        </article>
+      </section>
+
+      <section class="section method" aria-labelledby="method-title">
+        <div class="section-heading">
+          <h2 id="method-title">What made the result credible</h2>
+          <p>
+            The project treated every decode as a hypothesis, every failure as evidence, and
+            every coaching value as unsafe until its inputs could support a decision.
+          </p>
+        </div>
+
+        <div class="method-grid">
+          <article>
+            <h3>Retain the raw stream</h3>
+            <p>Store each frame before parsing so later corrections remain exact and auditable.</p>
+          </article>
+          <article>
+            <h3>Test on owned hardware</h3>
+            <p>Verify framing, commands, timing, and replay behavior against the actual band.</p>
+          </article>
+          <article>
+            <h3>Separate compute from trust</h3>
+            <p>Keep derived values for audit while withholding them from coaching when evidence is weak.</p>
+          </article>
+          <article>
+            <h3>Publish the failures</h3>
+            <p>Preserve negative results and two agent promotion revocations instead of smoothing them over.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section safety" aria-labelledby="safety-title">
+        <div class="safety-copy">
+          <h2 id="safety-title">A convincing number can still be unsafe.</h2>
+          <p>
+            An apparently plausible recovery scalar survived computation on a severely incomplete
+            day. Doop stores derived values for audit but withholds them from coaching until
+            coverage, sleep, and baseline gates all pass.
+          </p>
+          <a
+            class="text-link"
+            href="https://github.com/sushrutb17/doop-showcase/blob/main/evidence/STATIC_TRACE.md"
+            >Follow the static trace</a
+          >
+        </div>
+
+        <aside class="safety-proof" aria-label="Deterministic safety proof">
+          <p class="proof-label">Synthetic pain intercept</p>
+          <strong>0 model tokens</strong>
+          <strong>0 tool calls</strong>
+          <p>
+            Safety and unavailable-data responses run before model inference. Personality cannot
+            override them.
+          </p>
+        </aside>
+      </section>
+
+      <section class="section reviewer" id="evidence" aria-labelledby="reviewer-title">
+        <div class="section-heading compact">
+          <h2 id="reviewer-title">A ten-minute reviewer path</h2>
+          <p>Each headline claim points to one artifact and one check a reviewer can run independently.</p>
+        </div>
+
+        <div class="reviewer-grid">
+          <a
+            class="reviewer-link reviewer-link-featured"
+            href="https://github.com/sushrutb17/doop-showcase/blob/main/REVIEWER_CHECKLIST.md"
+          >
+            <span>Start here</span>
+            <strong>Claim, evidence, command</strong>
+            <p>The shortest path through the protocol, metric, and agent claims.</p>
+          </a>
+          <a
+            class="reviewer-link"
+            href="https://github.com/sushrutb17/doop-showcase/blob/main/evidence/HARDWARE_RESULTS.md"
+          >
+            <span>Recorded results</span>
+            <strong>Hardware ledger</strong>
+            <p>What was proven privately and what the public suite reproduces.</p>
+          </a>
+          <a
+            class="reviewer-link"
+            href="https://github.com/sushrutb17/doop-showcase/blob/main/integrations/openclaw/ACCEPTANCE.md"
+          >
+            <span>Agent behavior</span>
+            <strong>Acceptance record</strong>
+            <p>Visible outputs, forbidden disclosures, and both promotion revocations.</p>
+          </a>
+          <a
+            class="reviewer-link"
+            href="https://github.com/sushrutb17/doop-showcase/blob/main/EVIDENCE_MANIFEST.md"
+          >
+            <span>Release index</span>
+            <strong>Evidence manifest</strong>
+            <p>Traceable claims, commands, résumé language, and release artifacts.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section limits" aria-labelledby="limits-title">
+        <div>
+          <h2 id="limits-title">The limits are part of the work.</h2>
+          <p>
+            This is a method-and-evidence repository, not a medical device or a replacement for a
+            commercial health platform.
+          </p>
+        </div>
+        <ul>
+          <li>Recovery, strain, and sleep are independent proxies, not WHOOP parity.</li>
+          <li>Apple Watch is a second observer, not ground truth.</li>
+          <li>OpenClaw supplies the generic runtime; Doop supplies the domain boundaries.</li>
+          <li>Raw health data, device identifiers, credentials, and personal profiles remain private.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built as a privacy-safe engineering case study.</p>
+      <a href="https://github.com/sushrutb17/doop-showcase">Inspect the repository</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+[project]
+name = "whoop-local"
+version = "0.1.0"
+description = "Local-first WHOOP 4.0 BLE capture, storage, and MCP access"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+requires-python = ">=3.11"
+dependencies = [
+    "bleak>=0.22",
+    "mcp>=1.2,<2",
+    "numpy",
+    "pandas",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.17",
+    "pip-audit>=2.9",
+    "pytest>=8.0",
+    "pytest-cov>=6.2",
+    "ruff>=0.12",
+]
+dashboard = [
+    "streamlit",
+]
+
+[project.scripts]
+doop-init = "whoop_local.config:init_main"
+doop-scan = "whoop_local.capture.scan:main"
+doop-collect = "whoop_local.capture.collector:main"
+doop-compute = "whoop_local.compute.compute_daily:main"
+doop-mcp = "whoop_local.mcp_server.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"whoop_local.integrations" = ["safety_messages.json"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+follow_imports = "skip"
+ignore_missing_imports = true
+no_implicit_optional = true
+no_site_packages = true
+warn_unused_ignores = true
+
+[tool.coverage.run]
+branch = true
+source = ["whoop_local"]
+
+[tool.coverage.report]
+fail_under = 65
+show_missing = true
+skip_covered = true
+
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"

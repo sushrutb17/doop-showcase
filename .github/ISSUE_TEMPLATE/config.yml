@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security or sensitive privacy report
+    url: https://github.com/sushrutb17/doop-showcase/security/policy
+    about: Read the private-reporting policy before sharing details; never post sensitive values publicly.

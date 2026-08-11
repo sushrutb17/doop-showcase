@@ -1,0 +1,17 @@
+{
+  "name": "Foundation A (synthetic confirmation)",
+  "started_at": "2037-07-06T18:00:00+00:00",
+  "ended_at": "2037-07-06T19:00:00+00:00",
+  "notes": "Fictional confirmation-boundary example.",
+  "exercises": [
+    {
+      "name": "Goblet Squat (Dumbbell)",
+      "notes": "Synthetic example; controlled tempo.",
+      "sets": [
+        {"weight": 16, "weight_unit": "kg", "reps": 9, "rir": 3},
+        {"weight": 16, "weight_unit": "kg", "reps": 9, "rir": 3},
+        {"weight": 16, "weight_unit": "kg", "reps": 9, "rir": 3}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+name: Privacy-boundary concern
+description: Safely flag a privacy-control gap without publishing the sensitive value.
+title: "[Privacy]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue and its attachments are public. Never quote, paste, screenshot, or link directly to personal data, credentials, device identifiers, private runtime output, or other sensitive values. For an actual exposure, use GitHub private vulnerability reporting as described in SECURITY.md. If that is unavailable, choose "Request a private contact channel" below and provide no sensitive details.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Concern type
+      options:
+        - Request a private contact channel
+        - Privacy-check false negative demonstrated with synthetic data
+        - Repository-history or commit-metadata concern
+        - Documentation or release privacy-claim concern
+        - Data-minimization design concern
+        - Other non-sensitive privacy concern
+    validations:
+      required: true
+
+  - type: textarea
+    id: safe_summary
+    attributes:
+      label: Non-sensitive summary
+      description: Describe the risk category and impact without reproducing the affected value.
+      placeholder: The scanner does not detect a class of identity field in a synthetic fixture.
+    validations:
+      required: true
+
+  - type: input
+    id: paths
+    attributes:
+      label: Affected path or component
+      description: Filenames or component names only. Omit a path if naming it would expose a person.
+      placeholder: tools/privacy_check.py
+
+  - type: textarea
+    id: synthetic_reproduction
+    attributes:
+      label: Synthetic reproduction, if safe
+      description: Use invented values only. Leave blank and request private contact if no safe reproduction exists.
+
+  - type: checkboxes
+    id: safe_to_publish
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I did not include or quote the sensitive value, personal data, credentials, or private artifacts.
+          required: true
+        - label: I read SECURITY.md and will continue privately if the maintainer requests it.
+          required: true
+        - label: Any reproduction above is entirely synthetic and not derived from a real person's record.
+          required: true

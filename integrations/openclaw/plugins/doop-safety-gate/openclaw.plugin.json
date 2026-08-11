@@ -1,0 +1,14 @@
+{
+  "id": "doop-safety-gate",
+  "name": "Doop Safety Gate",
+  "description": "Deterministically intercepts safety-critical training messages before model inference.",
+  "version": "0.1.0",
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

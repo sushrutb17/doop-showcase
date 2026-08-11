@@ -1,0 +1,71 @@
+name: Reproducible bug
+description: Report a code, test, documentation, or static-site defect using synthetic inputs.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. This issue is public. Do not include real health data, exports, device or chat identifiers, credentials, owner-linked dates, local paths, or screenshots from a personal runtime. Use the privacy template or SECURITY.md if the issue involves sensitive content.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Privacy gate or publication boundary
+        - Protocol framing, parsing, or history sync
+        - Metrics or confidence gating
+        - MCP or agent safety behavior
+        - Workout, plan, or confirmation boundary
+        - Tests, dependencies, or CI
+        - Documentation, evidence, or static site
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Safe summary
+      description: Explain the defect without including private or identifying values.
+      placeholder: What happened, and why is it incorrect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Synthetic reproduction
+      description: Provide the smallest reproduction using generated packets or invented records only.
+      placeholder: |
+        1. Run ...
+        2. Use this synthetic input ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: List only non-identifying versions and platform information.
+      placeholder: Python version, operating-system family/version, relevant package version
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: publication_boundary
+    attributes:
+      label: Publication-boundary confirmation
+      options:
+        - label: I used only synthetic inputs and removed personal data, secrets, identifiers, local paths, and private runtime output.
+          required: true
+        - label: I checked that the report does not claim medical validity or proprietary-score parity.
+          required: true

@@ -1,0 +1,13 @@
+{
+  "hype": "low",
+  "playful_roast": "off",
+  "verbosity": "standard",
+  "accountability": "low",
+  "quiet_hours": {
+    "start": "00:00",
+    "end": "00:00",
+    "timezone": "Etc/UTC"
+  },
+  "disallowed_language": [],
+  "proactive_messages": false
+}

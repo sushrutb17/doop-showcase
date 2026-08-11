@@ -1,0 +1,187 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Source quality and dependency security
+    needs: repository-safety
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          cache-suffix: quality
+          enable-cache: true
+          python-version: "3.11"
+
+      - name: Install locked dependencies
+        run: uv sync --all-extras --locked
+
+      - name: Lint
+        run: uv run ruff check src tests tools
+
+      - name: Check formatting
+        run: uv run ruff format --check src tests tools
+
+      - name: Type-check source
+        run: uv run mypy src/whoop_local
+
+      - name: Enforce branch coverage floor
+        run: uv run pytest --cov=whoop_local --cov-report=term-missing -q
+
+      - name: Audit installed dependencies
+        run: uv run pip-audit --local --progress-spinner=off
+
+      - name: Build wheel and source distribution
+        run: uv build --clear
+
+      - name: Verify distribution contents
+        run: |
+          uv run python - <<'PY'
+          from pathlib import Path
+          import tarfile
+          import zipfile
+
+          wheels = list(Path("dist").glob("whoop_local-*.whl"))
+          sdists = list(Path("dist").glob("whoop_local-*.tar.gz"))
+          assert len(wheels) == 1, f"expected one wheel, found {len(wheels)}"
+          assert len(sdists) == 1, f"expected one sdist, found {len(sdists)}"
+
+          with zipfile.ZipFile(wheels[0]) as archive:
+              wheel_names = set(archive.namelist())
+          assert "whoop_local/integrations/safety_messages.json" in wheel_names
+          assert any(name.endswith(".dist-info/licenses/LICENSE") for name in wheel_names)
+          assert any(
+              name.endswith(".dist-info/licenses/THIRD_PARTY_NOTICES.md")
+              for name in wheel_names
+          )
+
+          with tarfile.open(sdists[0], "r:gz") as archive:
+              sdist_names = set(archive.getnames())
+          assert any(name.endswith("/LICENSE") for name in sdist_names)
+          assert any(name.endswith("/THIRD_PARTY_NOTICES.md") for name in sdist_names)
+          assert any(
+              name.endswith("/src/whoop_local/integrations/safety_messages.json")
+              for name in sdist_names
+          )
+          PY
+
+      - name: Install wheel and smoke console commands
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_venv="${RUNNER_TEMP}/doop-wheel-venv"
+          wheel_path="$(find dist -maxdepth 1 -type f -name 'whoop_local-*.whl' -print -quit)"
+          test -n "${wheel_path}"
+          uv venv --python 3.11 "${package_venv}"
+          uv pip install --python "${package_venv}/bin/python" "${wheel_path}"
+          "${package_venv}/bin/python" -c \
+            'from whoop_local.integrations.openclaw_safety_server import OFFLINE_TEXT; assert OFFLINE_TEXT'
+          for command in doop-init doop-scan doop-collect doop-compute doop-mcp; do
+            "${package_venv}/bin/${command}" --help >/dev/null
+          done
+
+  python:
+    name: Python ${{ matrix.python-version }}
+    needs: repository-safety
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.14"]
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install locked dependencies
+        run: uv sync --all-extras --locked
+
+      - name: Python tests
+        run: uv run pytest -q
+
+      - name: Byte-compile source and tests
+        run: uv run python -m compileall -q src tests
+
+      - name: Validate installed Python dependencies
+        run: uv pip check
+
+  linux-arm64:
+    name: Linux ARM64 / Python 3.11
+    needs: repository-safety
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: true
+          python-version: "3.11"
+
+      - name: Verify native ARM64 runner
+        run: test "$(uname -m)" = "aarch64"
+
+      - name: Install locked dependencies
+        run: uv sync --all-extras --locked
+
+      - name: Python tests
+        run: uv run pytest -q
+
+      - name: Byte-compile source and tests
+        run: uv run python -m compileall -q src tests
+
+      - name: Validate installed Python dependencies
+        run: uv pip check
+
+  openclaw-plugin:
+    name: OpenClaw plugin tests
+    needs: repository-safety
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      - name: Node tests
+        run: node --test integrations/openclaw/plugins/doop-safety-gate/test/*.test.js
+
+  repository-safety:
+    name: Repository safety
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Enforce public repository privacy boundary
+        run: python3 tools/privacy_check.py

@@ -1,0 +1,1 @@
+"""Showcase-only verification helpers."""
